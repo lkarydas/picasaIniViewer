@@ -1,4 +1,4 @@
-% Viewer version 0.4
+% Picasa INI Viewer
 %
 % Use left and right arrows to go to previous/next image.
 % When you are done, press 'q' to close the figure.
@@ -38,8 +38,7 @@ global i;
 i = 1;
 h_fig = 1;
 
-outputFrameNumbers(files, uFaceIDs, 'frameNumberPerPerson.txt');
-
+%outputFrameNumbers(files, uFaceIDs, 'frameNumberPerPerson.txt');
 %makeFullscreenWindow(h_fig);
 redraw();
 printInfo()
