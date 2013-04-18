@@ -25,6 +25,8 @@ while ischar(tline)
         if strcmpi(tline, '[Picasa]')
             % This is the [Picasa] tag which holds folder information
             % ignore
+        elseif strcmpi(tline, '[Contacts2]')
+                % TODO: Parse the contact mapping
         else
             file_name = tline(2:end-1);
             tline = fgetl(fid);
