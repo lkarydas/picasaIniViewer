@@ -1,4 +1,8 @@
 function files = get_file_list(dataset_dir, ext, readEXIF, verbose)
+%get_file_list Recursively read the list of files inside a directory
+%   dataset_dir is the starting directory, ext is the extension of files
+%   you want to get, readEXIF is a boolean flag for whether to read EXIF
+%   information from image files or not.
 
 if ~exist('verbose', 'var')
     verbose = true;
