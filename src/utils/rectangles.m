@@ -8,35 +8,24 @@
 
 % e.g. rectangles2(files(i).pd, params)
 
-function rectangles(p, colors, uFaceIDs, finalizedIDs)
+function rectangles(p, colors, uFaceIDs, contactMap)
 
-if ~exist('finalizedIDs', 'var')
-    finalizedIDs = [];
+
+if ~exist('contactMap', 'var')
+    contactMap = [];
 end
 
 for i = 1:size(p.dets,1)
 
     
-    
-    
-    fID = faceID2Index(uFaceIDs, p.faceIDs{i});
-    finalized = false;
-    if ~isempty(finalizedIDs)
-        for j = 1:length(finalizedIDs)
-            if strcmp(finalizedIDs{j}, p.faceIDs{i})
-                finalized = true;
-                break;
-            end
-        end
-        
-    end
-    if finalized
-        continue;
-    end
-    
-    h = rectangle('Position', p.dets(i,1:4));
-    text(p.dets(i,1)+5, p.dets(i,2) + 15, num2str(fID-1), 'color', colors(fID,:), 'fontsize', 20);
-    set(h,'Curvature', [0 0], 'LineWidth', 3, 'EdgeColor', colors(fID,:));
+   h = rectangle('Position', p.dets(i,1:4));
+   fID = faceID2Index(uFaceIDs, p.faceIDs{i});
+   if isempty(contactMap)
+       text(p.dets(i,1)+5, p.dets(i,2) - 70, num2str(fID-1), 'color', colors(fID,:), 'fontsize', 15);
+   else 
+       text(p.dets(i,1)+5, p.dets(i,2) - 70, contactMap(p.faceIDs{i}), 'color', colors(fID,:), 'fontsize', 15);
+   end
+   set(h,'Curvature', [0 0], 'LineWidth', 3, 'EdgeColor', colors(fID,:));
 
 
 end
