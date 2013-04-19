@@ -12,13 +12,14 @@ param.picturesDir = '../test_pictures';
 addpath('utils');
 
 global files;
+global contactMap;
 % Get a list of all jpg files
 % TODO: If third arg is true, you have to catch the exception when
 % loading corrupt JPG files.
 files = get_file_list(param.picturesDir, '.jpg', true);
 % Parse .picasa.ini
 code = 1;   % Code to use for initial picasa detections
-files = parse_picasa_version_3(files, param, code);
+[files contactMap] = parse_picasa_version_3(files, param, code);
 
 counter = 0;
 for f = 1:length(files)
@@ -50,12 +51,13 @@ function redraw()
     global files;
     global colors;
     global uFaceIDs;
+    global contactMap;
     I = imread([files(i).rel_path filesep files(i).name]);
     imshow(I, 'InitialMagnification', 'fit')
     w = files(i).info.Width;
     h = files(i).info.Height;
     title([num2str(i) '. ' files(i).name '  size: ' num2str(w) 'x' num2str(h)], 'Interpreter', 'None')
-    rectangles(files(i).picasa1, colors, uFaceIDs);
+    rectangles(files(i).picasa1, colors, uFaceIDs, contactMap);
     printInfo()
 end
 
@@ -84,7 +86,7 @@ end
 
 function printInfo()
 global uFaceIDs;
-clc
+%clc
 for i = 1:length(uFaceIDs)
     disp([sprintf('%02i',i-1) ': ' uFaceIDs{i}]);
 end
