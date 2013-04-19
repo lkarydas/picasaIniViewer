@@ -1,4 +1,4 @@
-function files = parse_picasa_version_3(files, param, code)
+function [files contactMap] = parse_picasa_version_3(files, param, code)
 
 fprintf(['Importing face detections from ' ...
     param.picturesDir filesep '.picasa.ini ... '])
@@ -17,6 +17,8 @@ for i = 1:length(files)
 end
 
 counter = 0;
+skipNextLine = false;
+contactMap = containers.Map();
 tline = fgetl(fid);
 while ischar(tline)
     
@@ -26,7 +28,20 @@ while ischar(tline)
             % This is the [Picasa] tag which holds folder information
             % ignore
         elseif strcmpi(tline, '[Contacts2]')
-                % TODO: Parse the contact mapping
+            % Parse the contact map (HashID -> Contact name)
+            tline = fgetl(fid);
+            while ischar(tline) && tline(1) ~= '['
+                disp(['Processing: ' tline])
+                eqInd = strfind(tline, '=');
+                hashID = tline(1:eqInd-1);
+                name = tline(eqInd+1:end-2);
+                disp(['Hash: ' hashID]);
+                disp(['Name: ' name]);
+                contactMap(hashID) = name;
+                tline = fgetl(fid);
+            end
+            skipNextLine = true;    
+                
         else
             file_name = tline(2:end-1);
             tline = fgetl(fid);
@@ -57,7 +72,11 @@ while ischar(tline)
             end
         end
     end
-    tline = fgetl(fid);
+    if skipNextLine
+        skipNextLine = false;
+    else
+        tline = fgetl(fid);
+    end
 end
 
 disp('Done.')
