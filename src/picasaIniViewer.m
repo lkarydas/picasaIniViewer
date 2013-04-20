@@ -1,12 +1,16 @@
+function picasaIniViewer(imgPath)
 % Picasa INI Viewer
 %
 % Use left and right arrows to go to previous/next image.
 % When you are done, press 'q' to close the figure.
+%
+% Example usage: picasaIniViewer('../test_pictures');
+%
+% Written by Lazaros Karydas.
 
-function picasaIniViewer()
-clear,clc,close('all')
+clc,close('all')
 
-param.picturesDir = '../test_pictures';
+param.picturesDir = imgPath;
 
 % Add paths
 addpath('utils');
@@ -86,7 +90,7 @@ end
 
 function printInfo()
 global uFaceIDs;
-%clc
+clc
 for i = 1:length(uFaceIDs)
     disp([sprintf('%02i',i-1) ': ' uFaceIDs{i}]);
 end
