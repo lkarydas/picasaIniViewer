@@ -35,8 +35,9 @@ while ischar(tline)
                 eqInd = strfind(tline, '=');
                 hashID = tline(1:eqInd-1);
                 name = tline(eqInd+1:end-2);
-                disp(['Hash: ' hashID]);
-                disp(['Name: ' name]);
+                % Parser debugging
+                % disp(['Hash: ' hashID]);
+                % disp(['Name: ' name]);
                 contactMap(hashID) = name;
                 tline = fgetl(fid);
             end
