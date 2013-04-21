@@ -20,7 +20,7 @@ global contactMap;
 % Get a list of all jpg files
 % TODO: If third arg is true, you have to catch the exception when
 % loading corrupt JPG files.
-files = get_file_list(param.picturesDir, '.jpg', true);
+files = get_file_list(param.picturesDir);
 % Parse .picasa.ini
 code = 1;   % Code to use for initial picasa detections
 [files contactMap] = parse_picasa_version_3(files, param, code);
