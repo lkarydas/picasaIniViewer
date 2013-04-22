@@ -10,6 +10,16 @@ function picasaIniViewer(imgPath)
 
 clc,close('all')
 
+% If an image directory is not given, try the default
+if ~exist('imgPath', 'var')
+    imgPath = '../test_pictures';
+end
+
+% If the path is ending in slash or backslash, remove it
+if imgPath(end) == '/' || imgPath(end) == '\'
+    imgPath(end) = [];
+end
+
 param.picturesDir = imgPath;
 
 % Add paths
